@@ -9,7 +9,6 @@ dist/
 .env.local
 .env.development
 .env.production
-features/auth/FireBase
 src/features/auth/FireBase.js
 
 # Logs
