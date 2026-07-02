@@ -59,6 +59,7 @@ fastify.register(fastifySwaggerUi, {
 fastify.register(require('./routes/login'));
 fastify.register(require('./routes/register'));
 fastify.register(require('./routes/properties'));
+fastify.register(require('./routes/resetpassword'));
 
 // Firebase Social Login / Token Verification
 const authSchema = {

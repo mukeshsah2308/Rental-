@@ -194,8 +194,9 @@ const AuthPage = ({ type = 'user' }) => {
 
             <div className="mb-5 relative">
               <div className="flex justify-between items-center mb-2">
-                <label htmlFor="password" className="block text-sm font-semibold text-gray-900">Password</label>
-                {!isAdmin && <Link to="/reset-password" className="text-sm font-semibold text-[#0b57d0] hover:underline">Forgot password?</Link>}
+                {/* PREVIOUS CODE: Linked directly to /reset-password which was the Enter Email form */}
+                {/* {!isAdmin && <Link to="/reset-password" ... /> */}
+                {!isAdmin && <Link to="/forgot-password" className="text-sm font-semibold text-[#0b57d0] hover:underline">Forgot password?</Link>}
               </div>
               <div className="relative flex items-center group">
                 <Lock className="absolute left-3.5 text-gray-400" size={18} />
@@ -224,7 +225,9 @@ const AuthPage = ({ type = 'user' }) => {
                 <input id="rememberMe" type="checkbox" className="w-4 h-4 rounded border-gray-300 text-[#0b57d0] focus:ring-[#0b57d0] cursor-pointer" />
                 Remember me for 30 days
               </label>
-              {isAdmin && <Link to="/reset-password" className="text-sm font-semibold text-[#0b57d0] hover:underline">Forgot password?</Link>}
+              {/* PREVIOUS CODE: Linked directly to /reset-password which was the Enter Email form */}
+              {/* {isAdmin && <Link to="/reset-password" ... /> */}
+              {isAdmin && <Link to="/forgot-password" className="text-sm font-semibold text-[#0b57d0] hover:underline">Forgot password?</Link>}
             </div>
 
             <button type="submit" className="w-full bg-[#0b57d0] hover:bg-[#0947a8] text-white rounded-lg p-3.5 text-base font-semibold transition-all active:scale-[0.98]">
