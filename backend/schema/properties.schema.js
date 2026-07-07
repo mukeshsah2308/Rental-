@@ -12,7 +12,8 @@ const propertiesSchema = {
             'address',
             'city',
             'state',
-            'zipCode'
+            'zipCode',
+            'userId'
         ],
         properties: {
             listingTitle: { type: 'string' },
@@ -27,6 +28,7 @@ const propertiesSchema = {
             city: { type: 'string' },
             state: { type: 'string' },
             zipCode: { type: 'string' },
+            userId: { type: 'integer' },
             amenities: {
                 type: 'array',
                 items: { type: 'string' }

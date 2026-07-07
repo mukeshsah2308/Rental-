@@ -236,35 +236,8 @@ export default function ListPropertyAmenities() {
     }
 
 
-    setIsSubmitting(true);
-    try {
-      // Map listingTitle to title as required by the backend API schema
-      const payload = {
-        ...formData,
-        title: formData.listingTitle,
-      };
-
-      const response = await fetch(`${API_BASE_URL}/api/properties`, {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify(payload),
-      });
-
-      if (response.ok) {
-        toast.success("Property published successfully!");
-        navigate("/dashboard");
-      } else {
-        const errorData = await response.json();
-        toast.error(errorData.message || "Failed to publish property");
-      }
-    } catch (error) {
-      console.error("Error publishing property:", error);
-      toast.error("An error occurred while publishing");
-    } finally {
-      setIsSubmitting(false);
-    }
+    // Navigate directly to the preview details page passing the local state
+    navigate('/see-property/preview', { state: { previewData: formData } });
   };
 
   const handleSaveDraft = () => {
@@ -531,7 +504,7 @@ export default function ListPropertyAmenities() {
                   disabled={isSubmitting}
                   className="bg-[#0b57d0] hover:bg-[#0947a8] disabled:bg-gray-400 text-white px-6 py-3 rounded-xl font-bold text-sm shadow-sm inline-flex items-center gap-2 transition-all active:scale-[0.98]"
                 >
-                  {isSubmitting ? "Publishing..." : "Publish Listing"}
+                  {isSubmitting ? "Loading..." : "See Details"}
                   <Check size={16} />
                 </button>
                 {/* </Link> */}

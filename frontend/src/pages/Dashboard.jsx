@@ -1,109 +1,47 @@
-import React, { useState } from 'react';
+import { useState, useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
 import {
   Search, SlidersHorizontal, Banknote, Map as MapIcon,
-  Heart, MapPin, Bed, Bath, Maximize, Wifi, Users, Utensils,
-  Snowflake, Dumbbell, ShieldCheck, PaintRoller, Video
+  Heart, MapPin
 } from 'lucide-react';
 import Header from '../components/Header';
 import Sidebar from '../components/Sidebar';
+import config from '../config';
 
-const listings = [
-  {
-    id: 1,
-    title: "The Azure Lofts",
-    price: "$1,450",
-    location: "Upper East Side, New York",
-    badge: "AVAILABLE NOW",
-    badgeStyles: "bg-emerald-300 text-emerald-950",
-    image: "https://images.unsplash.com/photo-1560448204-e02f11c3d0e2?q=80&w=600&auto=format&fit=crop",
-    features: [
-      { icon: Bed, text: "2 Beds" },
-      { icon: Bath, text: "1 Bath" },
-      { icon: Maximize, text: "850 sqft" }
-    ]
-  },
-  {
-    id: 2,
-    title: "Cedar Street Suites",
-    price: "$950",
-    location: "Williamsburg, Brooklyn",
-    badge: "VERIFIED OWNER",
-    badgeStyles: "bg-cyan-200 text-cyan-950",
-    image: "https://images.unsplash.com/photo-1522708323590-d24dbb6b0267?q=80&w=600&auto=format&fit=crop",
-    features: [
-      { icon: Bed, text: "Studio" },
-      { icon: Bath, text: "1 Bath" },
-      { icon: Wifi, text: "Included" }
-    ]
-  },
-  {
-    id: 3,
-    title: "The Heritage PG",
-    price: "$600",
-    location: "Downtown, Jersey City",
-    badge: "BEST VALUE",
-    badgeStyles: "bg-green-200 text-green-900",
-    image: "https://images.unsplash.com/photo-1502672260266-1c1de2d93688?q=80&w=600&auto=format&fit=crop",
-    features: [
-      { icon: Users, text: "Shared (2)" },
-      { icon: Utensils, text: "Meals Inc." },
-      { icon: Snowflake, text: "AC Central" }
-    ]
-  },
-  {
-    id: 4,
-    title: "Skyline Heights",
-    price: "$2,100",
-    location: "Financial District, Manhattan",
-    image: "https://images.unsplash.com/photo-1513694203232-719a280e022f?q=80&w=600&auto=format&fit=crop",
-    features: [
-      { icon: Bed, text: "1 Bed" },
-      { icon: Dumbbell, text: "Gym Inc." },
-      { icon: ShieldCheck, text: "Secured" }
-    ]
-  },
-  {
-    id: 5,
-    title: "Park View Residence",
-    price: "$1,200",
-    location: "Astoria, Queens",
-    badge: "LAST UNIT",
-    badgeStyles: "bg-red-200 text-red-900",
-    image: "https://images.unsplash.com/photo-1497366216548-37526070297c?q=80&w=600&auto=format&fit=crop",
-    features: [
-      { icon: Bed, text: "2 Beds" },
-      { icon: Bath, text: "In-unit" },
-      { icon: LayoutGrid, text: "Balcony" }
-    ]
-  },
-  {
-    id: 6,
-    title: "Marble Square PG",
-    price: "$550",
-    location: "Hoboken, NJ",
-    image: "https://images.unsplash.com/photo-1620626011761-996317b8d101?q=80&w=600&auto=format&fit=crop",
-    features: [
-      { icon: Users, text: "Shared (3)" },
-      { icon: PaintRoller, text: "Cleaning Inc." },
-      { icon: Video, text: "CCTV" }
-    ]
-  }
-];
-
-// Helper imported here just so the 5th item doesn't crash if LayoutGrid wasn't kept in array
-import { LayoutGrid } from 'lucide-react';
+const { API_BASE_URL } = config;
 
 const Dashboard = () => {
+  const navigate = useNavigate();
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+  const [propertylist, setPropertyList] = useState([]);
+
+  //backend response
+  useEffect(() => {
+    const fetchPropertyList = async () => {
+      try {
+        const response = await fetch(`${API_BASE_URL}/api/properties`);
+        if (!response.ok) {
+          throw new Error("Network response was not okay");
+        }
+        const data = await response.json();
+        setPropertyList(data);
+        console.log(data);
+      } catch (err) {
+        console.log(err)
+      } 
+    }
+    fetchPropertyList();
+  }, [])
+
 
   return (
     <div className="flex h-screen bg-[#f9fafc] font-sans overflow-hidden ">
 
       {/* Sidebar fixed to the left taking full height */}
-      <Sidebar 
-        isOpen={isMobileMenuOpen} 
-        onClose={() => setIsMobileMenuOpen(false)} 
-        onMenuClick={() => setIsMobileMenuOpen(true)} 
+      <Sidebar
+        isOpen={isMobileMenuOpen}
+        onClose={() => setIsMobileMenuOpen(false)}
+        onMenuClick={() => setIsMobileMenuOpen(true)}
       />
 
       {/* Main Content Area - Scrollable */}
@@ -159,53 +97,69 @@ const Dashboard = () => {
 
             {/* Properties Grid */}
             <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-6">
-              {listings.map((listing) => (
-                <div key={listing.id} className="bg-white rounded-2xl overflow-hidden shadow-sm border border-gray-100 hover:shadow-md transition-shadow group flex flex-col">
-                  {/* Image & Badges */}
-                  <div className="relative h-56 overflow-hidden">
-                    <img
-                      src={listing.image}
-                      alt={listing.title}
-                      className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
-                    />
-                    {listing.badge && (
-                      <div className={`absolute top-4 left-4 px-3 py-1 rounded-full text-[0.65rem] font-bold tracking-widest uppercase shadow-sm ${listing.badgeStyles}`}>
-                        {listing.badge}
-                      </div>
-                    )}
-                    <button className="absolute top-4 right-4 bg-black/20 hover:bg-black/40 backdrop-blur-sm text-white p-2 rounded-full transition-colors">
-                      <Heart size={18} />
-                    </button>
-                  </div>
+              {propertylist.map((listing) => {
+                const imageUrl = (listing.photos && listing.photos.length > 0) 
+                  ? listing.photos[0] 
+                  : "https://images.unsplash.com/photo-1560448204-e02f11c3d0e2?q=80&w=600&auto=format&fit=crop";
 
-                  {/* Card Content */}
-                  <div className="p-5 flex flex-col flex-1">
-                    <div className="flex justify-between items-start mb-2">
-                      <h3 className="font-bold text-gray-900 text-lg leading-tight">{listing.title}</h3>
-                      <div className="text-right">
-                        <span className="font-bold text-[#0b57d0] text-lg">{listing.price}</span>
-                        <span className="text-xs text-gray-500 font-medium">/mo</span>
-                      </div>
-                    </div>
-
-                    <div className="flex items-center text-gray-500 text-sm mb-6 mt-1">
-                      <MapPin size={14} className="mr-1 shrink-0" />
-                      <span className="truncate">{listing.location}</span>
-                    </div>
-
-                    <div className="mt-auto pt-4 border-t border-gray-100 flex justify-between items-center text-gray-600">
-                      {listing.features.map((feature, idx) => (
-                        <div key={idx} className="flex flex-col items-center gap-1.5 flex-1">
-                          <feature.icon size={16} className="text-gray-400" />
-                          <span className="text-[0.65rem] font-bold tracking-wider uppercase text-center leading-tight">
-                            {feature.text}
-                          </span>
+                 return (
+                  <div 
+                    key={listing.id} 
+                    onClick={() => navigate(`/see-property/${listing.id}`)}
+                    className="bg-white rounded-2xl overflow-hidden shadow-sm border border-gray-100 hover:shadow-md transition-shadow group flex flex-col cursor-pointer"
+                  >
+                    {/* Image & Badges */}
+                    <div className="relative h-56 overflow-hidden">
+                      <img
+                        src={imageUrl}
+                        alt={listing.listingTitle}
+                        className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
+                      />
+                      {listing.category && (
+                        <div className="absolute top-4 left-4 px-3 py-1 rounded-full text-[0.65rem] font-bold tracking-widest uppercase shadow-sm bg-emerald-300 text-emerald-950">
+                          {listing.category}
                         </div>
-                      ))}
+                      )}
+                      <button 
+                        onClick={(e) => {
+                          e.stopPropagation();
+                          // like listing
+                        }}
+                        className="absolute top-4 right-4 bg-black/20 hover:bg-black/40 backdrop-blur-sm text-white p-2 rounded-full transition-colors"
+                      >
+                        <Heart size={18} />
+                      </button>
+                    </div>
+
+                    {/* Card Content */}
+                    <div className="p-5 flex flex-col flex-1">
+                      <div className="flex justify-between items-start mb-2">
+                        <h3 className="font-bold text-gray-900 text-lg leading-tight">{listing.listingTitle}</h3>
+                        <div className="text-right">
+                          <span className="font-bold text-[#0b57d0] text-lg">₹{listing.monthlyRent}</span>
+                          <span className="text-xs text-gray-500 font-medium">/mo</span>
+                        </div>
+                      </div>
+
+                      <div className="flex items-center text-gray-500 text-sm mb-6 mt-1">
+                        <MapPin size={14} className="mr-1 shrink-0" />
+                        <span className="truncate">{listing.address}, {listing.city}</span>
+                      </div>
+
+                      <div className="mt-auto pt-4 border-t border-gray-100 flex flex-wrap gap-2 text-gray-600">
+                        {listing.amenities && listing.amenities.slice(0, 3).map((amenity, idx) => (
+                          <span key={idx} className="bg-[#f0f4f9] text-gray-700 text-[0.65rem] font-bold px-2.5 py-1 rounded-lg uppercase tracking-wider">
+                            {amenity}
+                          </span>
+                        ))}
+                        {(!listing.amenities || listing.amenities.length === 0) && (
+                          <span className="text-[0.65rem] text-gray-400 font-semibold italic">No amenities specified</span>
+                        )}
+                      </div>
                     </div>
                   </div>
-                </div>
-              ))}
+                );
+              })}
             </div>
 
             <div className="mt-12 text-center">
@@ -228,3 +182,4 @@ const Dashboard = () => {
 };
 
 export default Dashboard;
+

@@ -111,6 +111,7 @@ async function publishProperty(request, reply) {
 
             amenities,
             photos,
+            userId,
         } = request.body || {};
 
         const pool = await poolPromise;
@@ -119,6 +120,7 @@ async function publishProperty(request, reply) {
         const parsedSecurityDeposit = securityDeposit ? parseInt(securityDeposit, 10) : null;
         const parsedMaintenanceFees = maintenanceFees ? parseInt(maintenanceFees, 10) : null;
         const parsedAvailableFrom = availableFrom || null;
+        const parsedUserId = userId ? parseInt(userId, 10) : null;
 
         const result = await pool.request()
             .input('listingTitle', sql.NVarChar(255), listingTitle)
@@ -138,6 +140,7 @@ async function publishProperty(request, reply) {
 
             .input('amenities', sql.NVarChar(sql.MAX), JSON.stringify(amenities))
             .input('photos', sql.NVarChar(sql.MAX), JSON.stringify(photos))
+            .input('userId', sql.Int, parsedUserId)
 
             .execute('sp_PublishProperty');
 

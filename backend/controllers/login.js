@@ -8,6 +8,9 @@ async function login(request, reply) {
     if (!email?.trim() || !password) {
         return reply.status(400).send("Email and password are required");
     }
+    //if you're using a Fastify schema for login, this check is mostly unnecessary
+    //  because the schema can validate required fields and email format
+    //  before the controller runs.
 
     try {
         const pool = await poolPromise;

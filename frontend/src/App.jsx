@@ -7,12 +7,16 @@ import ForgotPassword from './features/auth/ForgotPassword'; // Page 1: Enter em
 import ResetPassword from './features/auth/ResetPassword';   // Page 2: Enter new password with token
 import VerifyEmail from './features/auth/VerifyEmail';
 import Dashboard from './pages/Dashboard';
+import SeePropery from './pages/SeePropery';
+import Setting from './pages/setting';
+import MessagePage from './pages/message';
 import ListProperty from './pages/ListProperty';
 import ListPropertyPricing from './pages/ListPropertyPricing';
 import ListPropertyAmenities from './pages/ListPropertyAmenities';
 import MainListProperty from './pages/MainListProperty';
 import { Toaster } from 'react-hot-toast';
 import PropertyUpload from './pages/PropertyUpload'
+import UsersProperty from './pages/UsersProperty'
 
 function App() {
   return (
@@ -30,6 +34,10 @@ function App() {
         <Route path="/reset-password" element={<ResetPassword />} />
         <Route path="/verify-email" element={<VerifyEmail />} />
         <Route path="/dashboard" element={<Dashboard />} />
+        <Route path="/see-property/:id" element={<SeePropery />} />
+        <Route path="/setting" element={<Setting />} />
+        <Route path="/message" element={<MessagePage />} />
+        <Route path="/users-property" element={<UsersProperty />} />
         
         <Route path="/list-property" element={<MainListProperty />}>
           <Route index element={<ListProperty />} />

@@ -35,7 +35,8 @@ const Header = ({ onMenuClick }) => {
     localStorage.removeItem('fullname');
     localStorage.removeItem('email');
     setIsProfileOpen(false);
-    navigate('/login');
+    // Hard refresh/redirect so the browser network history log is cleared
+    window.location.href = '/login';
   };
 
   return (

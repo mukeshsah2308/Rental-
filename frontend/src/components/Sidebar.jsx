@@ -11,12 +11,12 @@ const Sidebar = ({ isOpen, onClose, onMenuClick }) => {
     <>
       {/* Mobile overlay */}
       {isOpen && (
-        <div 
-          className="fixed inset-0 bg-black/40 z-50 backdrop-blur-[2px] transition-opacity" 
-          onClick={onClose} 
+        <div
+          className="fixed inset-0 bg-black/40 z-50 backdrop-blur-[2px] transition-opacity"
+          onClick={onClose}
         />
       )}
-      
+
       {/* Sidebar Content */}
       <aside className={`
         fixed inset-y-0 left-0 z-[60] w-72 lg:w-64 bg-white border-r border-gray-100 flex flex-col
@@ -38,11 +38,10 @@ const Sidebar = ({ isOpen, onClose, onMenuClick }) => {
             <button
               type="button"
               onClick={() => { navigate('/dashboard'); onClose(); }}
-              className={`flex items-center gap-3 px-4 py-3 rounded-xl font-semibold shadow-sm text-left transition-colors ${
-                location.pathname === '/dashboard'
+              className={`flex items-center gap-3 px-4 py-3 rounded-xl font-semibold shadow-sm text-left transition-colors ${location.pathname === '/dashboard'
                   ? 'bg-[#3b82f6] text-white'
                   : 'text-gray-600 hover:bg-gray-100 font-medium'
-              }`}
+                }`}
             >
               <LayoutGrid size={20} />
               Overview
@@ -50,31 +49,47 @@ const Sidebar = ({ isOpen, onClose, onMenuClick }) => {
             <button
               type="button"
               onClick={() => { navigate('/list-property'); onClose(); }}
-              className={`flex items-center gap-3 px-4 py-3 rounded-xl font-semibold shadow-sm text-left transition-colors ${
-                location.pathname.startsWith('/list-property')
+              className={`flex items-center gap-3 px-4 py-3 rounded-xl font-semibold shadow-sm text-left transition-colors ${location.pathname.startsWith('/list-property')
                   ? 'bg-[#3b82f6] text-white'
                   : 'text-gray-600 hover:bg-gray-100 font-medium'
-              }`}
+                }`}
             >
               <Plus size={20} />
               List Property
             </button>
-            <a href="#" className="flex items-center gap-3 text-gray-600 hover:bg-gray-100 px-4 py-3 rounded-xl font-medium transition-colors">
-              <Home size={20} className="text-gray-500" />
-              My Properties
-            </a>
+            <button
+            onClick={()=>{navigate('/users-property'); onClose();}}
+            >
+              <a href="#" className="flex items-center gap-3 text-gray-600 hover:bg-gray-100 px-4 py-3 rounded-xl font-medium transition-colors">
+                <Home size={20} className="text-gray-500" />
+                My Properties
+              </a>
+            </button>
+
             <a href="#" className="flex items-center gap-3 text-gray-600 hover:bg-gray-100 px-4 py-3 rounded-xl font-medium transition-colors">
               <FileText size={20} className="text-gray-500" />
               Lease Agreements
             </a>
-            <a href="#" className="flex items-center gap-3 text-gray-600 hover:bg-gray-100 px-4 py-3 rounded-xl font-medium transition-colors">
-              <MessageSquare size={20} className="text-gray-500" />
+            <button
+              onClick={() => { navigate('/message'); onClose(); }}
+              className={`w-full flex items-center gap-3 px-4 py-3 rounded-xl font-semibold transition-colors ${location.pathname === '/message'
+                  ? 'bg-[#3b82f6] text-white'
+                  : 'text-gray-600 hover:bg-gray-100 font-medium'
+                }`}
+            >
+              <MessageSquare size={20} className={location.pathname === '/message' ? 'text-white' : 'text-gray-500'} />
               Messages
-            </a>
-            <a href="#" className="flex items-center gap-3 text-gray-600 hover:bg-gray-100 px-4 py-3 rounded-xl font-medium transition-colors">
-              <Settings size={20} className="text-gray-500" />
+            </button>
+            <button
+              onClick={() => { navigate('/setting'); onClose(); }}
+              className={`w-full flex items-center gap-3 px-4 py-3 rounded-xl font-semibold transition-colors ${location.pathname === '/setting'
+                  ? 'bg-[#3b82f6] text-white'
+                  : 'text-gray-600 hover:bg-gray-100 font-medium'
+                }`}
+            >
+              <Settings size={20} className={location.pathname === '/setting' ? 'text-white' : 'text-gray-500'} />
               Settings
-            </a>
+            </button>
           </nav>
 
           {/* Verified Owner CTA */}
