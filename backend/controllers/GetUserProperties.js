@@ -34,7 +34,7 @@ async function getUserProperties(request, reply) {
             };
         });
 
-        return reply.send(properties);
+         return reply.send(properties);
     } catch (err) {
         request.log.error(err);
         return reply.status(500).send('Database error');

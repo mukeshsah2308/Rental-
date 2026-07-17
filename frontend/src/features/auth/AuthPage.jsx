@@ -34,10 +34,10 @@ const AuthPage = ({ type = 'user' }) => {
       });
 
       if (response.data?.user?.id) {
-        localStorage.setItem('userId', String(response.data.user.id));
+        sessionStorage.setItem('userId', String(response.data.user.id));// help to store id in sessionstorage
       }
-      localStorage.setItem('fullname', response.data?.user?.fullname || '');
-      localStorage.setItem('email', response.data?.user?.email || login.email);
+      sessionStorage.setItem('fullname', response.data?.user?.fullname || '');
+      sessionStorage.setItem('email', response.data?.user?.email || login.email);
 
       toast.success("login successfull");
       navigate('/dashboard');
@@ -93,10 +93,10 @@ const AuthPage = ({ type = 'user' }) => {
 
       // 💾 Store user
       if (data?.user?.id) {
-        localStorage.setItem("userId", String(data.user.id));
+        sessionStorage.setItem("userId", String(data.user.id));
       }
-      localStorage.setItem("fullname", data?.user?.fullname || user.displayName || "");
-      localStorage.setItem("email", data?.user?.email || user.email || "");
+      sessionStorage.setItem("fullname", data?.user?.fullname || user.displayName || "");
+      sessionStorage.setItem("email", data?.user?.email || user.email || "");
 
       // 🚀 Redirect
       toast.success('Signed in successfully!')

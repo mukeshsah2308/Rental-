@@ -9,13 +9,14 @@ export default function userproperty() {
     useEffect(() => {
         const fetchUserProperty = async () => {
             try {
-                const userId = localStorage.getItem('userId');
-                if (!userId) {
-                    console.error("No user ID found in localStorage");
+                const id = sessionStorage.getItem('userId');
+                console.log(id);
+                if (!id) {
+                    console.error("No user ID found in sessionStorage");
                     return;
                 }
 
-                const response = await fetch(`${API_BASE_URL}/api/properties/user/${userId}`);
+                const response = await fetch(`${API_BASE_URL}/api/properties/user/${id}`);
                 if (!response.ok) {
                     throw new Error("Network response was not okay");
                 }

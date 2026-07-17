@@ -62,7 +62,7 @@ export default function SeePropery() {
 
     setIsSubmitting(true);
     try {
-      const rawUserId = localStorage.getItem('userId');
+      const rawUserId = sessionStorage.getItem('userId');
       if (!rawUserId) {
         toast.error("You must be logged in to publish a property listing.");
         setIsSubmitting(false);

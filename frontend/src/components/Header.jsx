@@ -31,9 +31,9 @@ const Header = ({ onMenuClick }) => {
   }, []);
 
   const handleLogout = () => {
-    localStorage.removeItem('userId');
-    localStorage.removeItem('fullname');
-    localStorage.removeItem('email');
+    sessionStorage.removeItem('userId');
+    sessionStorage.removeItem('fullname');
+    sessionStorage.removeItem('email');
     setIsProfileOpen(false);
     // Hard refresh/redirect so the browser network history log is cleared
     window.location.href = '/login';
@@ -69,7 +69,7 @@ const Header = ({ onMenuClick }) => {
               <div className="px-4 py-3 border-b border-gray-100">
                 <p className="text-sm font-semibold text-gray-900">My Account</p>
                 <p className="text-xs text-gray-500 truncate">
-                  {localStorage.getItem('email') || 'Signed in user'}
+                  {sessionStorage.getItem('email') || 'Signed in user'}
                 </p>
               </div>
               <button

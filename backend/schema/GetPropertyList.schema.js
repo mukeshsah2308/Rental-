@@ -22,22 +22,21 @@ const propertyObjectSchema = {
         photos: {
             type: 'array',
             items: { type: 'string' }
-        }
+        },
+        userId: { type: 'integer' }
     }
 };
 
-const getPropertyListSchema ={
-    summary:'get all properties',
-    // tags:[properties], // Error: properties is not defined
+const GetPropertyListingSchema = {
+    summary: "Get all propertyList",
     tags: ['Properties'],
     response: {
         200: {
             type: 'array',
-            // items: propertyObjectSchema // Error: propertyObjectSchema is not defined
             items: propertyObjectSchema
         },
         500: { type: 'string' }
     }
-}
+};
 
-module.exports = { getPropertyListSchema };
+module.exports = { GetPropertyListingSchema };
